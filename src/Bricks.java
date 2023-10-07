@@ -1,32 +1,19 @@
-import java.awt.Color;
-import java.awt.Dimension;
-import java.util.ArrayList;
+import java.awt.Rectangle;
 
-import javax.swing.JLabel;
+public class Bricks extends Rectangle{
 
-public class Bricks extends JLabel {
+	private boolean isBroken = false;
 	
-	private int id;
-	static ArrayList<Bricks> brickList = new ArrayList<Bricks>();
-
-	Bricks(int argId){
-		
-		this.setId(argId);
-		this.setPreferredSize(new Dimension(70,50));
-		this.setBackground(Color.red);
-		this.setOpaque(true);
-		brickList.add(this);
-		
-		
+	Bricks(int x, int y, int width, int height){
+		super(x,y,width,height);
 	}
 	
-	
-	
-	public int getId(){
-		return this.id;
+	public void setBroken(boolean arg) {
+		this.isBroken = arg;
 	}
 	
-	public void setId(int argId) {
-		this.id = argId;
+	public boolean getBroken() {
+		return this.isBroken;
 	}
+	
 }
