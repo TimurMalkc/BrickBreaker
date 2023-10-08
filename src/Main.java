@@ -1,10 +1,17 @@
+import java.util.ArrayList;
+
 public class Main{
+	
+	private static ArrayList<Frame> frameList = new ArrayList<Frame>();
 	
 	public static void main(String[] args) {
 		
-		new Frame();
-		
+		Frame newFrame = new Frame();
+		frameList.add(newFrame);
 	}
 	
+	public static ArrayList<Frame> getFrameList() {
+		return frameList;
+	}
 	
 }

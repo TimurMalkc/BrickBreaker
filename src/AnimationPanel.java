@@ -1,7 +1,9 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagLayout;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.Timer;
@@ -34,6 +37,7 @@ public class AnimationPanel extends JPanel implements ActionListener, KeyListene
 	ArrayList<Bricks> rects = new ArrayList<Bricks>();
 	Rectangle ballRect = new Rectangle(ballX,ballY,ballWidth,ballHeight);
 	Rectangle platformRect = new Rectangle(platformX, platformY, platformWidth, platformHeight);
+	ReplayButton rButton = new ReplayButton();
 	
 	AnimationPanel(){
 		
@@ -42,6 +46,8 @@ public class AnimationPanel extends JPanel implements ActionListener, KeyListene
 		this.setFocusable(true);
 		this.requestFocusInWindow();
 		this.addKeyListener(this);
+		this.setLayout(new GridBagLayout());
+		this.add(rButton);
 		timer.start();
 		
 		for(int i = 0; i < 3; i++) {
@@ -87,7 +93,16 @@ public class AnimationPanel extends JPanel implements ActionListener, KeyListene
 		
 		if(ballY >= panelHeight - ballHeight || ballY<0 || platformRect.intersects(ballRect))
 			ballVelocityY *= -1;
-	
+		
+		if(ballY == panelHeight-ballHeight) {
+			timer.stop();
+			rButton.setText("Game Over");
+			rButton.setVisible(true);
+			repaint();
+		}
+			
+			
+		
 		for(Bricks rect : rects) {
 			if(rect.intersects(ballRect) && rect.getBroken() == false) {
 				rect.setBroken(true);
@@ -107,7 +122,7 @@ public class AnimationPanel extends JPanel implements ActionListener, KeyListene
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -115,10 +130,14 @@ public class AnimationPanel extends JPanel implements ActionListener, KeyListene
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()) {
 			case KeyEvent.VK_LEFT:
-				platformX -= 10;
+				if(platformX > 0) {
+					platformX -= 20;
+				}
 				break;
 			case KeyEvent.VK_RIGHT:
-				platformX += 10;
+				if(platformX <= panelWidth-platformWidth-10) {
+					platformX += 20;
+				}
 				break;
 		}
 			
