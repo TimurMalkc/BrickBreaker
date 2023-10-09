@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -12,11 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 import javax.swing.Timer;
 
 public class AnimationPanel extends JPanel implements ActionListener, KeyListener{
@@ -34,6 +29,7 @@ public class AnimationPanel extends JPanel implements ActionListener, KeyListene
 	int platformY = 650;
 	int platformWidth = 100;
 	int platformHeight = 20;
+	int brickCount = 0;
 	ArrayList<Bricks> rects = new ArrayList<Bricks>();
 	Rectangle ballRect = new Rectangle(ballX,ballY,ballWidth,ballHeight);
 	Rectangle platformRect = new Rectangle(platformX, platformY, platformWidth, platformHeight);
@@ -54,10 +50,9 @@ public class AnimationPanel extends JPanel implements ActionListener, KeyListene
 			for(int z = 0; z < 11; z++) {
 				Bricks rect = new Bricks(20+z+z*50, i+i*50, 50, 50);
 				rects.add(rect);
+				brickCount++;
 			}	
 		}
-		
-		
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -71,7 +66,6 @@ public class AnimationPanel extends JPanel implements ActionListener, KeyListene
 			if(rect.getBroken() == false)
 				g2D.fillRect(rect.x, rect.y, 50, 50);
 		}
-		
 		
 		g2D.setPaint(Color.white);
 		g2D.fillOval(ballX, ballY, ballWidth, ballHeight);
@@ -101,15 +95,18 @@ public class AnimationPanel extends JPanel implements ActionListener, KeyListene
 			repaint();
 		}
 			
-			
-		
 		for(Bricks rect : rects) {
 			if(rect.intersects(ballRect) && rect.getBroken() == false) {
 				rect.setBroken(true);
+				brickCount--;
 				ballVelocityY *= -1;
 				ballVelocityX *= -1;
-				
-				
+				if(brickCount == 0) {
+					timer.stop();
+					rButton.setText("You Won");
+					rButton.setVisible(true);
+					repaint();
+				}
 			}
 		}
 		
@@ -121,26 +118,19 @@ public class AnimationPanel extends JPanel implements ActionListener, KeyListene
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		
-		
-	}
-
-	@Override
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()) {
 			case KeyEvent.VK_LEFT:
 				if(platformX > 0) {
-					platformX -= 20;
+					platformX -= 30;
 				}
 				break;
 			case KeyEvent.VK_RIGHT:
 				if(platformX <= panelWidth-platformWidth-10) {
-					platformX += 20;
+					platformX += 30;
 				}
 				break;
 		}
-			
 	}
 
 	@Override
@@ -149,7 +139,10 @@ public class AnimationPanel extends JPanel implements ActionListener, KeyListene
 		
 	}
 
-	
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+	}
 	
 	
 }
