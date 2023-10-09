@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+@SuppressWarnings("serial")
 public class AnimationPanel extends JPanel implements ActionListener, KeyListener{
 
 	Timer timer = new Timer(10,this);

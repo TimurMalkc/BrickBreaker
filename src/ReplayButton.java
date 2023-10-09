@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 
+@SuppressWarnings("serial")
 public class ReplayButton extends JButton implements ActionListener{
 	
 	ArrayList<Frame> frameList = Main.getFrameList();

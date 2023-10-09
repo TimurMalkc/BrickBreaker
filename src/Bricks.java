@@ -1,5 +1,6 @@
 import java.awt.Rectangle;
 
+@SuppressWarnings("serial")
 public class Bricks extends Rectangle{
 
 	private boolean isBroken = false;
