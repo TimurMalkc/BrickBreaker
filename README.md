@@ -1,2 +1,2 @@
 # BrickBreaker
-Simple brick breaker game using Swing
+Brick breaker game using Swing
